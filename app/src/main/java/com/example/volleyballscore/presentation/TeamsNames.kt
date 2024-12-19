@@ -19,14 +19,12 @@ fun TeamsNames() {
         ) {
             curvedRow {
                 curvedText(
-                    modifier = CurvedModifier.padding(angular = 50.dp),
+                    modifier = CurvedModifier.padding(angular = 60.dp),
                     text = "Home"
-                    // text = if (serving[0]) "\uD83C\uDFD0 Home" else "Home"
                 )
                 curvedText(
-                    modifier = CurvedModifier.padding(angular = 50.dp),
+                    modifier = CurvedModifier.padding(angular = 60.dp),
                     text = "Visitor"
-                    // text = if (serving[1]) "Visitor \uD83C\uDFD0" else "Visitor"
                 )
             }
         }

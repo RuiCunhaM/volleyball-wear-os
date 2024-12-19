@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -46,7 +47,7 @@ class MainActivity : ComponentActivity() {
 fun VolleyballApp() {
     val scoreCount = remember { mutableStateListOf(0, 0) }
     val setCount = remember { mutableStateListOf(0, 0) }
-    // val serving = remember { mutableStateListOf(false, false) }
+    val serving = remember { mutableStateListOf(false, false) }
     val matchPoint = remember { mutableStateOf(false) }
 
     VolleyballScoreTheme {
@@ -66,10 +67,20 @@ fun VolleyballApp() {
                 modifier = Modifier,
                 scoreCount
             )
-            SetCounter(
-                modifier = Modifier,
-                setCount
-            )
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                ServingIcon(serving, 0)
+                SetCounter(
+                    modifier = Modifier
+                        .width(80.dp),
+                    setCount
+                )
+                ServingIcon(serving, 1)
+            }
+
             // Extra padding on the bottom
             Box(
                 modifier = Modifier
@@ -89,7 +100,7 @@ fun VolleyballApp() {
                 0,
                 scoreCount,
                 setCount,
-                // serving,
+                serving,
                 matchPoint
             )
             TeamButton(
@@ -97,7 +108,7 @@ fun VolleyballApp() {
                 1,
                 scoreCount,
                 setCount,
-                // serving,
+                serving,
                 matchPoint
             )
         }

@@ -15,7 +15,7 @@ fun TeamButton(
     teamIndex: Int,
     scoreCount: SnapshotStateList<Int>,
     setCount: SnapshotStateList<Int>,
-    // serving: SnapshotStateList<Boolean>,
+    serving: SnapshotStateList<Boolean>,
     matchPoint: MutableState<Boolean>
 ) {
     Button(
@@ -26,8 +26,8 @@ fun TeamButton(
         onClick = {
             val otherTeam = teamIndex xor 1;
             scoreCount[teamIndex]++;
-            // serving[teamIndex] = true;
-            // serving[otherTeam] = false;
+            serving[teamIndex] = true;
+            serving[otherTeam] = false;
 
             if (scoreCount[teamIndex] >= 25 &&
                 (scoreCount[teamIndex] - scoreCount[otherTeam] >= 2)
@@ -35,8 +35,8 @@ fun TeamButton(
                 scoreCount[teamIndex] = 0;
                 setCount[teamIndex]++;
                 scoreCount[otherTeam] = 0;
-                // serving[teamIndex] = false;
-                // serving[otherTeam] = false;
+                serving[teamIndex] = false;
+                serving[otherTeam] = false;
             }
 
             if ((scoreCount[teamIndex] >= 24 || scoreCount[otherTeam] >= 24) &&
