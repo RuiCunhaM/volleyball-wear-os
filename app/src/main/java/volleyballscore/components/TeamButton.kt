@@ -1,4 +1,4 @@
-package com.example.volleyballscore.presentation
+package volleyballscore.components
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable

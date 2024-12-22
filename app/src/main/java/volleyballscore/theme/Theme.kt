@@ -1,4 +1,4 @@
-package com.example.volleyballscore.presentation.theme
+package volleyballscore.theme
 
 import androidx.compose.runtime.Composable
 import androidx.wear.compose.material.MaterialTheme
