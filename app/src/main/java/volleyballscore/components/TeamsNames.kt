@@ -1,4 +1,4 @@
-package com.example.volleyballscore.presentation
+package volleyballscore.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp

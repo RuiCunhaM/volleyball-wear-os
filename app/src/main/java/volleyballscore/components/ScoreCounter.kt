@@ -1,4 +1,4 @@
-package com.example.volleyballscore.presentation
+package volleyballscore.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
