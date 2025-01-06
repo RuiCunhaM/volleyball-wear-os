@@ -13,3 +13,7 @@ A simple Wear OS application to keep track of the score during Volleyball matche
 ![](images/image1.png)
 ![](images/image2.png)
 ![](images/image3.png)
+
+## Open Source Licenses
+
+- This project uses [Material Icons](https://fonts.google.com/icons) licensed under [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
