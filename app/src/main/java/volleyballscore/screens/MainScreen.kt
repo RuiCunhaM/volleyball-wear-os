@@ -14,9 +14,8 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.wear.compose.material.Text
+import volleyballscore.components.MatchPointIndicator
 import volleyballscore.components.ScoreCounter
 import volleyballscore.components.ServingIcon
 import volleyballscore.components.SetCounter
@@ -38,11 +37,7 @@ fun MainScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text(
-                modifier = Modifier,
-                text = if (matchPoint.value) "Match Point! \uD83C\uDFC6" else "",
-                textAlign = TextAlign.Center,
-            )
+            MatchPointIndicator(matchPoint)
             ScoreCounter(
                 modifier = Modifier,
                 scoreCount
