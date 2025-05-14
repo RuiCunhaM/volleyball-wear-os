@@ -42,7 +42,7 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun VolleyballApp() {
-    val scoreCount = remember { mutableStateListOf(0, 0) }
+    val scoreCount = remember { mutableStateListOf(listOf(0, 0)) }
     val setCount = remember { mutableStateListOf(0, 0) }
     val serving = remember { mutableStateListOf(false, false) }
     val matchPoint = remember { mutableStateOf(false) }

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.PagerState
@@ -26,7 +27,7 @@ import kotlinx.coroutines.launch
 fun OptionsScreen(
     scrollScope: CoroutineScope,
     pagerState: PagerState,
-    scoreCount: SnapshotStateList<Int>,
+    scoreCount: SnapshotStateList<List<Int>>,
     setCount: SnapshotStateList<Int>,
     serving: SnapshotStateList<Boolean>,
     matchPoint: MutableState<Boolean>
@@ -37,10 +38,35 @@ fun OptionsScreen(
         verticalArrangement = Arrangement.Center,
     ) {
         Button(
-            modifier = Modifier.width(100.dp),
+            modifier = Modifier
+                .width(100.dp),
             colors = ButtonDefaults.secondaryButtonColors(),
             onClick = {
-                scoreCount.replaceAll { 0 }
+                if (scoreCount.size > 1) {
+                    scoreCount.removeAt(scoreCount.lastIndex)
+                    serving.replaceAll { false }
+                }
+                scrollScope.launch { pagerState.animateScrollToPage(0) }
+            },
+        ) {
+            Text(
+                text = "Undo",
+                textAlign = TextAlign.Center
+            )
+        }
+        Box(
+            Modifier.size(
+                5.dp
+            )
+        )
+        Button(
+            modifier = Modifier
+                .width(100.dp)
+                .height(40.dp),
+            colors = ButtonDefaults.secondaryButtonColors(),
+            onClick = {
+                scoreCount.clear()
+                scoreCount.add(listOf(0, 0))
                 serving.replaceAll { false }
                 matchPoint.value = false
                 scrollScope.launch { pagerState.animateScrollToPage(0) }
@@ -53,17 +79,20 @@ fun OptionsScreen(
         }
         Box(
             Modifier.size(
-                10.dp
+                5.dp
             )
         )
         Button(
-            modifier = Modifier.width(100.dp),
+            modifier = Modifier
+                .width(100.dp)
+                .height(40.dp),
             colors = ButtonDefaults.secondaryButtonColors(),
             onClick = {
-                scoreCount.replaceAll { 0 }
-                setCount.replaceAll { 0 }
+                scoreCount.clear()
+                scoreCount.add(listOf(0, 0))
                 serving.replaceAll { false }
                 matchPoint.value = false
+                setCount.replaceAll { 0 }
                 scrollScope.launch { pagerState.animateScrollToPage(0) }
             },
         ) {

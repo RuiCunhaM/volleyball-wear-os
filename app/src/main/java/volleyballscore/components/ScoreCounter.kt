@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material.Text
 
 @Composable
-fun ScoreCounter(modifier: Modifier, scoreCount: SnapshotStateList<Int>) {
+fun ScoreCounter(modifier: Modifier, scoreCount: SnapshotStateList<List<Int>>) {
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
@@ -22,7 +22,7 @@ fun ScoreCounter(modifier: Modifier, scoreCount: SnapshotStateList<Int>) {
                 .weight(1f),
             textAlign = TextAlign.Right,
             fontSize = 50.sp,
-            text = "${scoreCount[0]}",
+            text = "${scoreCount.last()[0]}",
         )
         Text(
             textAlign = TextAlign.Center,
@@ -33,7 +33,7 @@ fun ScoreCounter(modifier: Modifier, scoreCount: SnapshotStateList<Int>) {
                 .weight(1f),
             textAlign = TextAlign.Left,
             fontSize = 50.sp,
-            text = "${scoreCount[1]}",
+            text = "${scoreCount.last()[1]}",
         )
     }
 }

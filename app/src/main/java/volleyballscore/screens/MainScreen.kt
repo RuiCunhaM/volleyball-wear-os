@@ -25,7 +25,7 @@ import volleyballscore.components.TeamsNames
 
 @Composable
 fun MainScreen(
-    scoreCount: SnapshotStateList<Int>,
+    scoreCount: SnapshotStateList<List<Int>>,
     setCount: SnapshotStateList<Int>,
     serving: SnapshotStateList<Boolean>,
     matchPoint: MutableState<Boolean>

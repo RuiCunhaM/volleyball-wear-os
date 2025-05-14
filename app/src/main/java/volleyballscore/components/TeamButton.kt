@@ -16,7 +16,7 @@ import androidx.wear.compose.material.Button
 fun TeamButton(
     modifier: Modifier,
     teamIndex: Int,
-    scoreCount: SnapshotStateList<Int>,
+    scoreCount: SnapshotStateList<List<Int>>,
     setCount: SnapshotStateList<Int>,
     serving: SnapshotStateList<Boolean>,
     matchPoint: MutableState<Boolean>
@@ -34,28 +34,32 @@ fun TeamButton(
         onClick = {
             vibrator.vibrate(clickEffect);
 
+            var currentScore = scoreCount.last().toMutableList();
+
             val otherTeam = teamIndex xor 1;
-            scoreCount[teamIndex]++;
+            currentScore[teamIndex]++;
             serving[teamIndex] = true;
             serving[otherTeam] = false;
 
-            if (scoreCount[teamIndex] >= 25 &&
-                (scoreCount[teamIndex] - scoreCount[otherTeam] >= 2)
+            if (currentScore[teamIndex] >= 25 &&
+                (currentScore[teamIndex] - currentScore[otherTeam] >= 2)
             ) {
-                scoreCount[teamIndex] = 0;
+                currentScore = mutableListOf(0, 0)
+                scoreCount.clear();
                 setCount[teamIndex]++;
-                scoreCount[otherTeam] = 0;
                 serving[teamIndex] = false;
                 serving[otherTeam] = false;
             }
 
-            if ((scoreCount[teamIndex] >= 24 || scoreCount[otherTeam] >= 24) &&
-                (scoreCount[teamIndex] != scoreCount[otherTeam])
+            if ((currentScore[teamIndex] >= 24 || currentScore[otherTeam] >= 24) &&
+                (currentScore[teamIndex] != currentScore[otherTeam])
             ) {
                 matchPoint.value = true
             } else {
                 matchPoint.value = false
             }
+
+            scoreCount.add(currentScore)
         },
         enabled = true,
     ) {}
