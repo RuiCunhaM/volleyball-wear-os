@@ -22,6 +22,17 @@ import androidx.wear.compose.material.Text
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
+fun resetCurrentMatch(
+    scoreCount: SnapshotStateList<List<Int>>,
+    serving: SnapshotStateList<Boolean>,
+    matchPoint: MutableState<Boolean>
+) {
+    scoreCount.clear()
+    scoreCount.add(listOf(0, 0))
+    serving.replaceAll { false }
+    matchPoint.value = false
+}
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OptionsScreen(
@@ -65,10 +76,7 @@ fun OptionsScreen(
                 .height(40.dp),
             colors = ButtonDefaults.secondaryButtonColors(),
             onClick = {
-                scoreCount.clear()
-                scoreCount.add(listOf(0, 0))
-                serving.replaceAll { false }
-                matchPoint.value = false
+                resetCurrentMatch(scoreCount, serving, matchPoint)
                 scrollScope.launch { pagerState.animateScrollToPage(0) }
             },
         ) {
@@ -88,10 +96,7 @@ fun OptionsScreen(
                 .height(40.dp),
             colors = ButtonDefaults.secondaryButtonColors(),
             onClick = {
-                scoreCount.clear()
-                scoreCount.add(listOf(0, 0))
-                serving.replaceAll { false }
-                matchPoint.value = false
+                resetCurrentMatch(scoreCount, serving, matchPoint)
                 setCount.replaceAll { 0 }
                 scrollScope.launch { pagerState.animateScrollToPage(0) }
             },

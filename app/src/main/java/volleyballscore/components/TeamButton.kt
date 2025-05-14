@@ -51,13 +51,8 @@ fun TeamButton(
                 serving[otherTeam] = false;
             }
 
-            if ((currentScore[teamIndex] >= 24 || currentScore[otherTeam] >= 24) &&
-                (currentScore[teamIndex] != currentScore[otherTeam])
-            ) {
-                matchPoint.value = true
-            } else {
-                matchPoint.value = false
-            }
+            matchPoint.value = (currentScore[teamIndex] >= 24 || currentScore[otherTeam] >= 24) &&
+                    (currentScore[teamIndex] != currentScore[otherTeam])
 
             scoreCount.add(currentScore)
         },
