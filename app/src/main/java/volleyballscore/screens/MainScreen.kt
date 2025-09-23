@@ -9,28 +9,31 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.wear.compose.material.Text
 import volleyballscore.components.ScoreCounter
 import volleyballscore.components.ServingIcon
 import volleyballscore.components.SetCounter
 import volleyballscore.components.TeamButton
 import volleyballscore.components.TeamsNames
+import volleyballscore.models.VolleyBallScoreViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+
+const val HOME_TEAM = 0
+const val VISITOR_TEAM = 1
 
 @Composable
 fun MainScreen(
-    scoreCount: SnapshotStateList<List<Int>>,
-    setCount: SnapshotStateList<Int>,
-    serving: SnapshotStateList<Boolean>,
-    matchPoint: MutableState<Boolean>
+    viewModel: VolleyBallScoreViewModel = viewModel()
 ) {
-    // Score and Set counters
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
     Box {
         Column(
             modifier = Modifier
@@ -40,27 +43,21 @@ fun MainScreen(
         ) {
             Text(
                 modifier = Modifier,
-                text = if (matchPoint.value) "Match Point! \uD83C\uDFC6" else "",
+                text = if (uiState.isMatchPoint.value) "Match Point! \uD83C\uDFC6" else "",
                 textAlign = TextAlign.Center,
             )
-            ScoreCounter(
-                modifier = Modifier,
-                scoreCount
-            )
-
+            ScoreCounter(modifier = Modifier)
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
-                ServingIcon(serving, 0)
+                ServingIcon(HOME_TEAM)
                 SetCounter(
                     modifier = Modifier
-                        .width(80.dp),
-                    setCount
+                        .width(80.dp)
                 )
-                ServingIcon(serving, 1)
+                ServingIcon(VISITOR_TEAM)
             }
-
             // Extra padding on the bottom
             Box(
                 modifier = Modifier
@@ -68,7 +65,6 @@ fun MainScreen(
                     .height(20.dp)
             )
         }
-
         // Buttons
         Row(
             Modifier.fillMaxSize(),
@@ -77,22 +73,13 @@ fun MainScreen(
         ) {
             TeamButton(
                 Modifier.weight(1f),
-                0,
-                scoreCount,
-                setCount,
-                serving,
-                matchPoint
+                HOME_TEAM,
             )
             TeamButton(
                 Modifier.weight(1f),
-                1,
-                scoreCount,
-                setCount,
-                serving,
-                matchPoint
+                VISITOR_TEAM,
             )
         }
-
         // Bottom text
         TeamsNames()
     }

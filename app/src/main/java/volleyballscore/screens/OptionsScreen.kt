@@ -1,6 +1,5 @@
 package volleyballscore.screens
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,38 +9,23 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.ButtonDefaults
 import androidx.wear.compose.material.Text
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import volleyballscore.models.VolleyBallScoreViewModel
 
-fun resetCurrentMatch(
-    scoreCount: SnapshotStateList<List<Int>>,
-    serving: SnapshotStateList<Boolean>,
-    matchPoint: MutableState<Boolean>
-) {
-    scoreCount.clear()
-    scoreCount.add(listOf(0, 0))
-    serving.replaceAll { false }
-    matchPoint.value = false
-}
-
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OptionsScreen(
     scrollScope: CoroutineScope,
     pagerState: PagerState,
-    scoreCount: SnapshotStateList<List<Int>>,
-    setCount: SnapshotStateList<Int>,
-    serving: SnapshotStateList<Boolean>,
-    matchPoint: MutableState<Boolean>
+    viewModel: VolleyBallScoreViewModel = viewModel()
 ) {
     Column(
         Modifier.fillMaxSize(),
@@ -53,10 +37,7 @@ fun OptionsScreen(
                 .width(100.dp),
             colors = ButtonDefaults.secondaryButtonColors(),
             onClick = {
-                if (scoreCount.size > 1) {
-                    scoreCount.removeAt(scoreCount.lastIndex)
-                    serving.replaceAll { false }
-                }
+                viewModel.undoScore()
                 scrollScope.launch { pagerState.animateScrollToPage(0) }
             },
         ) {
@@ -76,7 +57,7 @@ fun OptionsScreen(
                 .height(40.dp),
             colors = ButtonDefaults.secondaryButtonColors(),
             onClick = {
-                resetCurrentMatch(scoreCount, serving, matchPoint)
+                viewModel.resetScore()
                 scrollScope.launch { pagerState.animateScrollToPage(0) }
             },
         ) {
@@ -96,8 +77,7 @@ fun OptionsScreen(
                 .height(40.dp),
             colors = ButtonDefaults.secondaryButtonColors(),
             onClick = {
-                resetCurrentMatch(scoreCount, serving, matchPoint)
-                setCount.replaceAll { 0 }
+                viewModel.resetAll()
                 scrollScope.launch { pagerState.animateScrollToPage(0) }
             },
         ) {

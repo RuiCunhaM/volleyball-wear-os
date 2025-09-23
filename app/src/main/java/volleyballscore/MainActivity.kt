@@ -4,13 +4,10 @@ import android.R.style.Theme_DeviceDefault
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -39,13 +36,8 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun VolleyballApp() {
-    val scoreCount = remember { mutableStateListOf(listOf(0, 0)) }
-    val setCount = remember { mutableStateListOf(0, 0) }
-    val serving = remember { mutableStateListOf(false, false) }
-    val matchPoint = remember { mutableStateOf(false) }
     val scrollScope = rememberCoroutineScope()
 
     VolleyballScoreTheme {
@@ -77,17 +69,13 @@ fun VolleyballApp() {
             ) { page ->
                 when (page) {
                     0 -> {
-                        MainScreen(scoreCount, setCount, serving, matchPoint)
+                        MainScreen()
                     }
 
                     1 -> {
                         OptionsScreen(
                             scrollScope,
                             pagerState,
-                            scoreCount,
-                            setCount,
-                            serving,
-                            matchPoint
                         )
                     }
                 }
